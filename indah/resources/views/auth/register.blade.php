@@ -38,14 +38,20 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="contact" class="col-md-4 col-form-label text-md-right">{{ __('contact') }}</label>
 
                             <div class="col-md-6">
                                 <input id="contact" type="number" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact">
-                                </div>
-                        </div>
 
+                                @error('contact')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
@@ -65,38 +71,33 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="from-control" name="password_confirmation" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="captcha" class="col-md-4 col-form-label text-md-right">{{ __('captcha') }}</label>
+                        <div class="form-group row"{{ $errors->has('captcha')}}>
+                            <label for="captcha" class="col-md-4 col-form-label text-md-right">Captcha</label>
 
                             <div class="col-md-6">
-                             <div class="captcha">
-                                <span>{!! captcha_img () !!}</span>
-                                <button type="button" class=" btn btn-success btn-refresh">refresh</button>
-                            </div>
-                            
-                                <input id="captcha" type="text" class="form-control mt-2 @error('captcha') is-invalid @enderror" name="captcha" placeholder="Enter captcha">
+                                <div class="captcha">
+                                    <span>{!! captcha_img() !!}</span>
+                                    <br>
+                                    <br>
 
-                                @error('captcha')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                    <button type="button" class="btn btn-success btn-refresh">Refresh</button>
+                                <div>
+                                    <br>
+                                <input type="text" id="captcha" class="form-control" placeholder="Enter Catpcha" name="captcha"> 
+                                @if ($errors->has('captcha'))
+                                    <span classs="help-block">
+                                        <strong>{{ $errors->first('captcha')}}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
-
-
+                            <br>
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-0 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
